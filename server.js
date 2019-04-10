@@ -24,8 +24,10 @@ wss.on('connection', (ws) => {
   console.log('Client connected');
 
   wss.broadcast = function broadcast(data) {
+    console.log(wss.clients);
     wss.clients.forEach(function each(client) {
       if (client.readyState === WebSocket.OPEN) {
+        console.log("incoming message from server type: ", data);
         client.send(data);
       }
     });
@@ -34,6 +36,7 @@ wss.on('connection', (ws) => {
   ws.on('message', function incoming(data) {
     let new_data = Object.assign({}, JSON.parse(data));
     new_data.id = uuidv1();
+    new_data.type.includes("Message") ? new_data.type = "incomingMessage" : new_data.type = "incomingNotification";
     wss.broadcast(JSON.stringify(new_data));
   });
 
