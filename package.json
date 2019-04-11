@@ -5,6 +5,7 @@
   "main": "server.js",
   "dependencies": {
     "express": "4.16.4",
+    "randomcolor": "^0.5.4",
     "uuid": "^3.3.2",
     "ws": "6.2.1"
   },

@@ -4,6 +4,7 @@ const express = require('express');
 const WebSocket = require('ws');
 const SocketServer = require('ws').Server;
 const uuidv1 = require('uuid/v1');
+var randomColor = require('randomcolor');
 
 // Set the port to 3001
 const PORT = 3001;
@@ -24,7 +25,8 @@ wss.on('connection', (ws) => {
   console.log("# ppl connected", wss.clients.size);
   wss.clients.forEach(function each(client) {
     if (client.readyState === WebSocket.OPEN) {
-      client.send(wss.clients.size);
+      let color_and_users = {loggedIn: wss.clients.size, color: randomColor()};
+      client.send(JSON.stringify(color_and_users));
     }
   });
 
